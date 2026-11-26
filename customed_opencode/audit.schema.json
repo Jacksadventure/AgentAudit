@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "status",
+    "findings",
+    "summary"
+  ],
+  "properties": {
+    "status": {
+      "enum": [
+        "failure",
+        "clean",
+        "insufficient_evidence"
+      ]
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "component_type",
+          "component_id",
+          "fault_event_id",
+          "evidence_event_ids",
+          "explanation"
+        ],
+        "properties": {
+          "component_type": {
+            "enum": [
+              "Skill",
+              "Harness",
+              "Model",
+              "Tool"
+            ]
+          },
+          "component_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "fault_event_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "evidence_event_ids": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "explanation": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "string"
+    }
+  },
+  "if": {
+    "properties": {
+      "status": {
+        "const": "failure"
+      }
+    }
+  },
+  "then": {
+    "properties": {
+      "findings": {
+        "minItems": 1
+      }
+    }
+  },
+  "else": {
+    "properties": {
+      "findings": {
+        "maxItems": 0
+      }
+    }
+  }
+}

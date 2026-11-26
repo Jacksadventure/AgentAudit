@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "run_id",
+    "session_id",
+    "event_id",
+    "timestamp",
+    "component_type",
+    "component_id",
+    "component_version",
+    "operation",
+    "input_refs",
+    "output_refs",
+    "input",
+    "output",
+    "metadata",
+    "observation_source"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "session_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "event_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "component_type": {
+      "enum": [
+        "Skill",
+        "Harness",
+        "Model",
+        "Tool"
+      ]
+    },
+    "component_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "component_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "operation": {
+      "type": "string",
+      "minLength": 1
+    },
+    "input_refs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "event_id",
+          "relation",
+          "observed"
+        ],
+        "properties": {
+          "event_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "relation": {
+            "enum": [
+              "LOADS",
+              "INJECTS",
+              "TRANSFORMS",
+              "RETRIEVES",
+              "INVOKES",
+              "RETURNS",
+              "WRITES",
+              "DERIVES_FROM"
+            ]
+          },
+          "observed": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "output_refs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "event_id",
+          "relation",
+          "observed"
+        ],
+        "properties": {
+          "event_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "relation": {
+            "enum": [
+              "LOADS",
+              "INJECTS",
+              "TRANSFORMS",
+              "RETRIEVES",
+              "INVOKES",
+              "RETURNS",
+              "WRITES",
+              "DERIVES_FROM"
+            ]
+          },
+          "observed": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "input": {},
+    "output": {},
+    "metadata": {
+      "type": "object"
+    },
+    "observation_source": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}
